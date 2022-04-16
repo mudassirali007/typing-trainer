@@ -9,14 +9,16 @@ window.addEventListener('resize', setSize, false);
 const bgComplete = document.getElementById('uncompleted_bg');
 const fontSize = $("#uncompleted_text").css('font-size');
 const fontName = $("#uncompleted_text").css('font');
-let symble;
-let nextSymble;
-let nextSymbleWidth;
+const statsDiv = document.getElementById('stats');
+const statsText = document.getElementById('stats-text');
+let symbol;
+let nextSymbol;
+let nextSymbolWidth;
 let keyCounter = 0;
 let timerId = null;
 let isStartedTimer = false;
-let time = 0;
-let symbleCounter = 0;
+let time = 30;
+let symbolCounter = 0;
 let mistakeCounter = 0;
 
 function ready() {
@@ -37,12 +39,16 @@ function setCursorTimer() {
 
 function setSize() {
     // let nextKeyWidth = getTextWidth(uncompletedText.innerHTML[0]);
-    nextSymble = uncompletedText.innerHTML[0];
-    nextSymbleWidth = getTextWidth(nextSymble);
-    bgComplete.style.borderRightWidth = nextSymbleWidth + 'px';
+    nextSymbol = uncompletedText.innerHTML[0];
+    nextSymbolWidth = getTextWidth(nextSymbol);
+    bgComplete.style.borderRightWidth = nextSymbolWidth + 'px';
     completedText.style.left = $("#uncompleted_text").css("left").slice(0, -2) - getTextWidth(completedText.innerHTML) + 'px';
-    bgComplete.style.borderRightWidth = nextSymbleWidth + 'px';
+    bgComplete.style.borderRightWidth = nextSymbolWidth + 'px';
     completedText.style.left = $("#uncompleted_text").css("left").slice(0, -2) - getTextWidth(completedText.innerHTML) + 'px';
+    console.log($("#completed_bg").css("top").slice(0, -2) + fontSize.slice(0, -2) + 'px');
+    console.log(fontSize.slice(0, -2));
+    $(`#${nextSymbol}`).css('background-color', 'green');
+    // statsDiv.style.top = parseInt($("#completed_bg").css("top").slice(0, -2)) + parseInt(fontSize.slice(0, -2) * 2) + 'px';
 }
 
 let counter = 0;
@@ -50,30 +56,44 @@ let counter = 0;
 function keyHandler(e) {
     e.preventDefault();
     let keyCode = e.keyCode;
-    symble = uncompletedText.innerHTML[0];
-    nextSymble = uncompletedText.innerHTML[1];
-    nextSymbleWidth = getTextWidth(nextSymble)
+    symbol = uncompletedText.innerHTML[0];
+
+    if (e.keyCode == 116) {
+        stopTimer();
+        show();
+    }
 
 
-    if (keyDictionary[keyCode] != symble) {
+    $(`#${symbol}`).css('background-color', 'green');
+
+    nextSymbol = uncompletedText.innerHTML[1];
+    nextSymbolWidth = getTextWidth(nextSymbol)
+
+
+    if (keyDictionary[keyCode] != symbol) {
         if (isStartedTimer) {
             mistakeCounter++;
         }
         bgComplete.style.backgroundColor = 'red';
+        $(`#${keyDictionary[keyCode]}`).css('background-color', 'red');
         setTimeout(() => {
             bgComplete.style.backgroundColor = 'rgb(68, 189, 87)';
+            $(`#${keyDictionary[keyCode]}`).css('background-color', 'transparent');
         }, 200);
         return;
     }
+    $(`#${symbol}`).css('background-color', 'transparent');
+    nextSymbol = uncompletedText.innerHTML[1];
+    $(`#${nextSymbol}`).css('background-color', 'green');
     startTimer();
 
-    bgComplete.style.borderRightWidth = nextSymbleWidth + 'px';
+    bgComplete.style.borderRightWidth = nextSymbolWidth + 'px';
 
     if (keyCode == 32) {
         counter++;
-        // uncompletedText.innerHTML += nextWord();
+        uncompletedText.innerHTML += nextWord();
     } else {
-        symbleCounter++;
+        symbolCounter++;
     }
 
     if (counter == 10) {
@@ -83,13 +103,15 @@ function keyHandler(e) {
     }
 
     if (uncompletedText.innerHTML.length == 2) {
-        stopTimer();
-        confirm(`your speed: ${(symbleCounter/5/time*60).toFixed(1)}WPM`);
+        // stopTimer();
+        // confirm(`your speed: ${(symbleCounter/5/time*60).toFixed(1)}WPM`);
+        //    showResult();
+
         show();
         return;
     }
     uncompletedText.innerHTML = uncompletedText.innerHTML.slice(1);
-    completedText.innerHTML += symble;
+    completedText.innerHTML += symbol;
     completedText.style.left = $("#uncompleted_text").css("left").slice(0, -2) - getTextWidth(completedText.innerHTML) + 'px';
 
 
@@ -99,9 +121,14 @@ function startTimer() {
     if (isStartedTimer)
         return;
     isStartedTimer = true;
-    time = 0;
+    time = 30;
     timerId = setInterval(() => {
-        time += 0.1;
+        time -= 0.1;
+        if (time <= 0) {
+            stopTimer();
+            showResult();
+            show();
+        }
         timerLabel.innerHTML = time.toFixed(1);
     }, 100);
 
@@ -111,12 +138,15 @@ function stopTimer() {
     if (timerId) {
         clearInterval(timerId);
         isStartedTimer = false;
+        time = 30;
     }
 }
 
 
 function show() {
-    symbleCounter = 0;
+    time = 30;
+    $('#timer').text(`${time}.0`);
+    symbolCounter = 0;
     mistakeCounter = 0;
     const cloneDictionary = [...dictionary];
     let newText = '';
@@ -169,4 +199,11 @@ function getTextWidth(txt) {
     let formattedWidth = width;
     document.body.removeChild(text);
     return formattedWidth;
+}
+
+function showResult() {
+    $('#speed').text(`${(symbolCounter/5/time*60).toFixed(1)}WPM`);
+    $('#symbles').text(`${symbolCounter}`);
+    $('#mistakes').text(`${mistakeCounter}`);
+    $('#time').text(`${time.toFixed(1)}s`);
 }

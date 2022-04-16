@@ -14,15 +14,99 @@
 <body>
 
     <h1 id="name">Typing trainer</h1>
-    <div id="timer">0:00</div>
+    <div id="timer">30.00</div>
 
     <div id="main">
         <div id="completed_text">⠀</div>
         <div id="uncompleted_text"></div>
         <div id="uncompleted_bg">⠀</div>
         <div id="completed_bg">⠀</div>
+
+    </div>
+    <div id="stats">
+        <h2>Stats</h2>
+        <table border="1" id="stats-table">
+            <tr>
+                <th>speed</th>
+                <th>symbles</th>
+                <th>mistakes</th>
+                <th>time</th>
+            </tr>
+            <tr>
+                <td id="speed">-</td>
+                <td id="symbles">-</td>
+                <td id="mistakes">-</td>
+                <td id="time">-</td>
+            </tr>
+        </table>
+        <div id="stats-text"></div>
     </div>
 
+
+
+    <div id="keyboard">
+        <table border="1">
+            <h2>Keyboard</h2>
+
+            <tr>
+                <td id="q">q</td>
+                <td id="w">w</td>
+                <td id="e">e</td>
+                <td id="r">r</td>
+                <td id="t">t</td>
+                <td id="y">y</td>
+                <td id="u">u</td>
+                <td id="i">i</td>
+                <td id="o">o</td>
+                <td id="p">p</td>
+                <td>[</td>
+                <td>]</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td id="a">a</td>
+                <td id="s">s</td>
+                <td id="d">d</td>
+                <td id="f">f</td>
+                <td id="g">g</td>
+                <td id="h">h</td>
+                <td id="j">j</td>
+                <td id="k">k</td>
+                <td id="l">l</td>
+                <td>;</td>
+                <td>'</td>
+                <!-- <td></td> -->
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td id="z">z</td>
+                <td id="x">x</td>
+                <td id="c">c</td>
+                <td id="v">v</td>
+                <td id="b">b</td>
+                <td id="n">n</td>
+                <td id="m">m</td>
+                <td>,</td>
+                <td>.</td>
+                <td>/</td>
+
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="⠀">space</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+
+            </tr>
+
+        </table>
+    </div>
 </body>
 
 </html>
