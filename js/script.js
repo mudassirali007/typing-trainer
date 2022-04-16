@@ -58,17 +58,18 @@ function keyHandler(e) {
     let keyCode = e.keyCode;
     symbol = uncompletedText.innerHTML[0];
 
-    if (e.keyCode == 116) {
-        stopTimer();
-        show();
-    }
-
 
     $(`#${symbol}`).css('background-color', 'green');
 
     nextSymbol = uncompletedText.innerHTML[1];
     nextSymbolWidth = getTextWidth(nextSymbol)
 
+    if (e.keyCode == 116) {
+        stopTimer();
+        $(`#${symbol}`).css('background-color', 'transparent');
+        show();
+        return;
+    }
 
     if (keyDictionary[keyCode] != symbol) {
         if (isStartedTimer) {
@@ -86,6 +87,8 @@ function keyHandler(e) {
     nextSymbol = uncompletedText.innerHTML[1];
     $(`#${nextSymbol}`).css('background-color', 'green');
     startTimer();
+
+
 
     bgComplete.style.borderRightWidth = nextSymbolWidth + 'px';
 
@@ -146,6 +149,7 @@ function stopTimer() {
 function show() {
     time = 30;
     $('#timer').text(`${time}.0`);
+
     symbolCounter = 0;
     mistakeCounter = 0;
     const cloneDictionary = [...dictionary];
