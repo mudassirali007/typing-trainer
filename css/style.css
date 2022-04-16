@@ -14,12 +14,11 @@
     border-color: black;
     border-top: solid;
     border-bottom: solid;
-    border-width: 10px;
     vertical-align: middle;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 15px;
     line-height: 55px;
-    border-width: 10px;
+    border-width: 2px;
 }
 
 #completed_bg {
@@ -30,7 +29,7 @@
 #uncompleted_bg {
     left: 0;
     width: 25%;
-    background-color: rgb(68, 189, 87);
+    background-color: rgb(77, 114, 77);
     z-index: -1;
     border-right: solid;
 }
@@ -53,7 +52,7 @@ body {
     height: 100%;
     overflow: hidden;
     font-family: Geneva, Arial, Helvetica, sans-serif;
-    background-color: rgb(240, 183, 77);
+    /* background-color: rgb(240, 183, 77); */
 }
 
 #timer {

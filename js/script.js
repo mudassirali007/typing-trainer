@@ -78,7 +78,7 @@ function keyHandler(e) {
         bgComplete.style.backgroundColor = 'red';
         $(`#${keyDictionary[keyCode]}`).css('background-color', 'red');
         setTimeout(() => {
-            bgComplete.style.backgroundColor = 'rgb(68, 189, 87)';
+            bgComplete.style.backgroundColor = 'rgb(77, 114, 77)';
             $(`#${keyDictionary[keyCode]}`).css('background-color', 'transparent');
         }, 200);
         return;
@@ -207,7 +207,7 @@ function getTextWidth(txt) {
 
 function showResult() {
     $('#speed').text(`${(symbolCounter/5/time*60).toFixed(1)}WPM`);
-    $('#symbles').text(`${symbolCounter}`);
+    $('#symbols').text(`${symbolCounter}`);
     $('#mistakes').text(`${mistakeCounter}`);
     $('#time').text(`${time.toFixed(1)}s`);
 }
