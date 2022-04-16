@@ -2,6 +2,7 @@ const dictionary = ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 
 const keyDictionary = { 32: '⠀', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z' };
 const uncompletedText = document.getElementById('uncompleted_text');
 const completedText = document.getElementById('completed_text');
+const timerLabel = document.getElementById('timer');
 document.addEventListener('keydown', keyHandler, false);
 document.addEventListener("DOMContentLoaded", ready);
 window.addEventListener('resize', setSize, false);
@@ -12,7 +13,11 @@ let symble;
 let nextSymble;
 let nextSymbleWidth;
 let keyCounter = 0;
-
+let timerId = null;
+let isStartedTimer = false;
+let time = 0;
+let symbleCounter = 0;
+let mistakeCounter = 0;
 
 function ready() {
     show();
@@ -40,7 +45,6 @@ function setSize() {
     completedText.style.left = $("#uncompleted_text").css("left").slice(0, -2) - getTextWidth(completedText.innerHTML) + 'px';
 }
 
-
 let counter = 0;
 
 function keyHandler(e) {
@@ -50,19 +54,26 @@ function keyHandler(e) {
     nextSymble = uncompletedText.innerHTML[1];
     nextSymbleWidth = getTextWidth(nextSymble)
 
+
     if (keyDictionary[keyCode] != symble) {
+        if (isStartedTimer) {
+            mistakeCounter++;
+        }
         bgComplete.style.backgroundColor = 'red';
         setTimeout(() => {
             bgComplete.style.backgroundColor = 'rgb(68, 189, 87)';
         }, 200);
         return;
     }
+    startTimer();
 
     bgComplete.style.borderRightWidth = nextSymbleWidth + 'px';
 
     if (keyCode == 32) {
         counter++;
-        uncompletedText.innerHTML += nextWord();
+        // uncompletedText.innerHTML += nextWord();
+    } else {
+        symbleCounter++;
     }
 
     if (counter == 10) {
@@ -72,9 +83,8 @@ function keyHandler(e) {
     }
 
     if (uncompletedText.innerHTML.length == 2) {
-        // setTimeout(() => {
-        // confirm('your speed: ');
-        // });
+        stopTimer();
+        confirm(`your speed: ${(symbleCounter/5/time*60).toFixed(1)}WPM`);
         show();
         return;
     }
@@ -85,8 +95,29 @@ function keyHandler(e) {
 
 }
 
+function startTimer() {
+    if (isStartedTimer)
+        return;
+    isStartedTimer = true;
+    time = 0;
+    timerId = setInterval(() => {
+        time += 0.1;
+        timerLabel.innerHTML = time.toFixed(1);
+    }, 100);
+
+}
+
+function stopTimer() {
+    if (timerId) {
+        clearInterval(timerId);
+        isStartedTimer = false;
+    }
+}
+
 
 function show() {
+    symbleCounter = 0;
+    mistakeCounter = 0;
     const cloneDictionary = [...dictionary];
     let newText = '';
     let randInt = 0;
