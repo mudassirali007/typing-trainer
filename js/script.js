@@ -1,8 +1,10 @@
+import Keyboard from '../js/keyboard.js';
 const dictionary = ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america'];
 const keyDictionary = { 32: '⠀', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z' };
 const uncompletedText = document.getElementById('uncompleted_text');
 const completedText = document.getElementById('completed_text');
 const timerLabel = document.getElementById('timer');
+const keyboardCanvas = document.getElementById('keyboard_canvas');
 document.addEventListener('keydown', keyHandler, false);
 document.addEventListener("DOMContentLoaded", ready);
 window.addEventListener('resize', setSize, false);
@@ -20,8 +22,10 @@ let isStartedTimer = false;
 let time = 30;
 let symbolCounter = 0;
 let mistakeCounter = 0;
+let keyboard = null
 
 function ready() {
+    keyboard = new Keyboard(keyboardCanvas);
     show();
     setCursorTimer();
 }
@@ -47,7 +51,8 @@ function setSize() {
     completedText.style.left = $("#uncompleted_text").css("left").slice(0, -2) - getTextWidth(completedText.innerHTML) + 'px';
     console.log($("#completed_bg").css("top").slice(0, -2) + fontSize.slice(0, -2) + 'px');
     console.log(fontSize.slice(0, -2));
-    $(`#${nextSymbol}`).css('background-color', 'green');
+    $(`#${nextSymbol}`).css('background-color', 'rgb(77, 114, 77)');
+    keyboard.setKeyColor(nextSymbol, 'rgb(77, 114, 77)');
     // statsDiv.style.top = parseInt($("#completed_bg").css("top").slice(0, -2)) + parseInt(fontSize.slice(0, -2) * 2) + 'px';
 }
 
@@ -59,7 +64,8 @@ function keyHandler(e) {
     symbol = uncompletedText.innerHTML[0];
 
 
-    $(`#${symbol}`).css('background-color', 'green');
+    $(`#${symbol}`).css('background-color', 'rgb(77, 114, 77)');
+    keyboard.setKeyColor(symbol, 'rgb(77, 114, 77)');
 
     nextSymbol = uncompletedText.innerHTML[1];
     nextSymbolWidth = getTextWidth(nextSymbol)
@@ -67,6 +73,7 @@ function keyHandler(e) {
     if (e.keyCode == 116) {
         stopTimer();
         $(`#${symbol}`).css('background-color', 'transparent');
+        keyboard.setKeyColor(symbol);
         show();
         return;
     }
@@ -77,15 +84,19 @@ function keyHandler(e) {
         }
         bgComplete.style.backgroundColor = 'red';
         $(`#${keyDictionary[keyCode]}`).css('background-color', 'red');
+        keyboard.setKeyColor(keyDictionary[keyCode], 'red');
         setTimeout(() => {
             bgComplete.style.backgroundColor = 'rgb(77, 114, 77)';
             $(`#${keyDictionary[keyCode]}`).css('background-color', 'transparent');
+            keyboard.setKeyColor(keyDictionary[keyCode]);
         }, 200);
         return;
     }
     $(`#${symbol}`).css('background-color', 'transparent');
+    keyboard.setKeyColor(symbol);
     nextSymbol = uncompletedText.innerHTML[1];
-    $(`#${nextSymbol}`).css('background-color', 'green');
+    $(`#${nextSymbol}`).css('background-color', 'rgb(77, 114, 77)');
+    keyboard.setKeyColor(nextSymbol, 'rgb(77, 114, 77)');
     startTimer();
 
 
@@ -153,6 +164,8 @@ function show() {
     symbolCounter = 0;
     mistakeCounter = 0;
     const cloneDictionary = [...dictionary];
+    keyboard.setKeyColor(nextSymbol);
+    keyboard.setKeyColor(symbol);
     let newText = '';
     let randInt = 0;
     let isFirst = true;
