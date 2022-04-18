@@ -93,6 +93,8 @@ body {
     transform: translateX(-100%);
     /* font-size: 35px; */
     z-index: 1;
+    border: solid;
+    border-radius: 20px;
 }
 
 h2 {
@@ -118,8 +120,10 @@ h2 {
     /* transform: translateY(100px); */
     text-align: center;
     /* background-color: rgb(93, 91, 91); */
-    /* background-color: rgb(129, 129, 127); */
+    background-color: rgb(18, 18, 175);
     border-radius: 20px;
+    border: solid;
+    /* border-color: black; */
 }
 
 #keyboard_canvas {

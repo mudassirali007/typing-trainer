@@ -32,23 +32,30 @@ export default class Keyboard {
     setKeyButtons() {
         this.fixDPI();
         let padding = 10;
-        let stepX = Math.floor((this.canvas.width - padding * 5) / 12) - padding;
+        let stepX = Math.floor((this.canvas.width - this.canvas.width / 5) / 12) - padding;
         let stepY = Math.floor(this.canvas.height / 4) - padding * 1.5;
+        let startX = stepX + padding * 5;
 
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 12; j++) {
-                this.keys.push(new KeyButton(j * (stepX + padding) + padding * i * 2 + padding, i * (stepY + padding) + padding, stepX, stepY, Keyboard.keyNames[i][j]));
+                if (j == 10 && i == 1)
+                    break;
+                if (j == 9 && i == 2)
+                    break;
+                this.keys.push(new KeyButton(j * (stepX + padding) + padding + startX, i * (stepY + padding) + padding, stepX, stepY, Keyboard.keyNames[i][j]));
             }
+            startX += padding * 4;
+
         }
 
-        this.keys.push(new KeyButton(2 * (stepX + padding) + padding * 3, stepY * 3 + padding * 5, stepX * 6, stepY, '⠀'));
+        this.keys.push(new KeyButton(stepX + padding + startX, stepY * 3 + padding * 5, stepX * 6, stepY, '⠀'));
 
     }
 
     getKeyButtonPosByID(id) {
         for (let i = 0; i < this.keys.length; i++) {
             if (this.keys[i].id == id) {
-                console.log('found');
+                console.log('found: ', id);
                 return i;
             }
         }
@@ -58,10 +65,10 @@ export default class Keyboard {
 
     setKeyColor(id, color = 'white') {
         let pos = this.getKeyButtonPosByID(id);
-        if (!pos)
+        if (pos == null)
             return;
         let el = this.keys[pos];
-        console.log(el);
+        console.log('setColor', el);
         console.log(el.id);
         this.ctx.clearRect(el.x, el.y, el.w, el.h);
         this.drawButton(el, color);
@@ -69,7 +76,6 @@ export default class Keyboard {
 
     paint() {
         this.ctx.font = ' 48px cursive';
-
         this.keys.forEach(el => {
             this.drawButton(el);
         });

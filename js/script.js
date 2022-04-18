@@ -1,6 +1,6 @@
 import Keyboard from '../js/keyboard.js';
-const dictionary = ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america', 'put', 'print', 'about', 'true', 'false', 'input', 'while', 'for', 'table', 'char', 'double', 'string', 'bot', 'word', 'world', 'first', 'second', 'red', 'black', 'white', 'orange', 'travel', 'query', 'something', 'sometimes', 'anyway', 'return', 'add', 'delete', 'telegram', 'python', 'java ', 'css', 'javascript', 'list ', 'show', 'party', 'cat', 'read ', 'mile', 'once', 'point', 'number', 'through', 'its', 'because', 'school', 'book', 'have', 'switch', 'their', 'give'];
-const keyDictionary = { 32: '⠀', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z' };
+const dictionary = ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america', 'put', 'print', 'about', 'true', 'false', 'input', 'while', 'for', 'table', 'char', 'double', 'string', 'bot', 'word', 'world', 'first', 'second', 'red', 'black', 'white', 'orange', 'travel', 'query', 'something', 'sometimes', 'anyway', 'return', 'add', 'delete', 'telegram', 'python', 'java', 'css', 'javascript', 'list', 'show', 'party', 'cat', 'read', 'mile', 'once', 'point', 'number', 'through', 'its', 'because', 'school', 'book', 'have', 'switch', 'their', 'give'];
+const keyDictionary = { 32: '⠀', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z', 186: ';', 188: ',', 190: '.' };
 const uncompletedText = document.getElementById('uncompleted_text');
 const completedText = document.getElementById('completed_text');
 const timerLabel = document.getElementById('timer');
@@ -11,8 +11,6 @@ window.addEventListener('resize', setSize, false);
 const bgComplete = document.getElementById('uncompleted_bg');
 const fontSize = $("#uncompleted_text").css('font-size');
 const fontName = $("#uncompleted_text").css('font');
-const statsDiv = document.getElementById('stats');
-const statsText = document.getElementById('stats-text');
 let symbol;
 let nextSymbol;
 let nextSymbolWidth;
@@ -53,7 +51,6 @@ function setSize() {
     console.log(fontSize.slice(0, -2));
     $(`#${nextSymbol}`).css('background-color', 'rgb(77, 114, 77)');
     keyboard.setKeyColor(nextSymbol, 'rgb(77, 114, 77)');
-    // statsDiv.style.top = parseInt($("#completed_bg").css("top").slice(0, -2)) + parseInt(fontSize.slice(0, -2) * 2) + 'px';
 }
 
 let counter = 0;
@@ -78,16 +75,16 @@ function keyHandler(e) {
         return;
     }
 
+    console.log(keyCode);
+    console.log('dict', keyDictionary[keyCode]);
     if (keyDictionary[keyCode] != symbol) {
         if (isStartedTimer) {
             mistakeCounter++;
         }
         bgComplete.style.backgroundColor = 'red';
-        $(`#${keyDictionary[keyCode]}`).css('background-color', 'red');
         keyboard.setKeyColor(keyDictionary[keyCode], 'red');
         setTimeout(() => {
             bgComplete.style.backgroundColor = 'rgb(77, 114, 77)';
-            $(`#${keyDictionary[keyCode]}`).css('background-color', 'transparent');
             keyboard.setKeyColor(keyDictionary[keyCode]);
         }, 200);
         return;
@@ -98,8 +95,6 @@ function keyHandler(e) {
     $(`#${nextSymbol}`).css('background-color', 'rgb(77, 114, 77)');
     keyboard.setKeyColor(nextSymbol, 'rgb(77, 114, 77)');
     startTimer();
-
-
 
     bgComplete.style.borderRightWidth = nextSymbolWidth + 'px';
 
@@ -132,6 +127,7 @@ function keyHandler(e) {
 }
 
 function startTimer() {
+    let isColored = false;
     if (isStartedTimer)
         return;
     isStartedTimer = true;
@@ -142,6 +138,10 @@ function startTimer() {
             stopTimer();
             showResult();
             show();
+        }
+        if (time <= 10 && !isColored) {
+            $('#timer').css('color', 'red');
+            isColored = true;
         }
         timerLabel.innerHTML = time.toFixed(1);
     }, 100);
@@ -160,6 +160,7 @@ function stopTimer() {
 function show() {
     time = 30;
     $('#timer').text(`${time}.0`);
+    $('#timer').css('color', 'white');
 
     symbolCounter = 0;
     mistakeCounter = 0;
