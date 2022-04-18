@@ -1,5 +1,5 @@
 import Keyboard from '../js/keyboard.js';
-const dictionary = ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america'];
+const dictionary = ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america', 'put', 'print', 'about', 'true', 'false', 'input', 'while', 'for', 'table', 'char', 'double', 'string', 'bot', 'word', 'world', 'first', 'second', 'red', 'black', 'white', 'orange', 'travel', 'query', 'something', 'sometimes', 'anyway', 'return', 'add', 'delete', 'telegram', 'python', 'java ', 'css', 'javascript', 'list ', 'show', 'party', 'cat', 'read ', 'mile', 'once', 'point', 'number', 'through', 'its', 'because', 'school', 'book', 'have', 'switch', 'their', 'give'];
 const keyDictionary = { 32: '⠀', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z' };
 const uncompletedText = document.getElementById('uncompleted_text');
 const completedText = document.getElementById('completed_text');
