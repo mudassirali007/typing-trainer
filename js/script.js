@@ -123,8 +123,9 @@ function keyHandler(e) {
         symbolCounter++;
     }
 
-    if (counter == 10) {
-        completedText.innerHTML = '⠀' + completedText.innerHTML.slice(-50);
+    if (counter == 1) {
+        console.log('clear');
+        completedText.innerHTML = '⠀' + completedText.innerHTML.slice(-10);
         counter = 0;
 
     }
