@@ -1,6 +1,6 @@
 import Keyboard from '../js/keyboard.js';
 const dictionary = ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america', 'put', 'print', 'about', 'true', 'false', 'input', 'while', 'for', 'table', 'char', 'double', 'string', 'bot', 'word', 'world', 'first', 'second', 'red', 'black', 'white', 'orange', 'travel', 'query', 'something', 'sometimes', 'anyway', 'return', 'add', 'delete', 'telegram', 'python', 'java', 'css', 'javascript', 'list', 'show', 'party', 'cat', 'read', 'mile', 'once', 'point', 'number', 'through', 'its', 'because', 'school', 'book', 'have', 'switch', 'their', 'give'];
-const keyDictionary = { 32: '⠀', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z', 186: ';', 188: ',', 190: '.' };
+const keyDictionary = { 32: '⠀', 48: '0', 49: '1', 50: '2', 51: '3', 52: '4', 53: '5', 54: '6', 55: '7', 56: '8', 57: '9', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z', 186: ';', 187: '=', 188: ',', 189: '-', 190: '.', 191: '/', 219: '[', 221: ']', 222: "'" };
 const uncompletedText = document.getElementById('uncompleted_text');
 const completedText = document.getElementById('completed_text');
 const timerLabel = document.getElementById('timer');
@@ -9,7 +9,7 @@ document.addEventListener('keydown', keyHandler, false);
 document.addEventListener("DOMContentLoaded", ready);
 window.addEventListener('resize', setSize, false);
 const bgComplete = document.getElementById('uncompleted_bg');
-const fontSize = $("#uncompleted_text").css('font-size');
+let fontSize = $("#uncompleted_text").css('font-size');
 const fontName = $("#uncompleted_text").css('font');
 let symbol;
 let nextSymbol;
@@ -41,6 +41,7 @@ function setCursorTimer() {
 
 function setSize() {
     // let nextKeyWidth = getTextWidth(uncompletedText.innerHTML[0]);
+
     nextSymbol = uncompletedText.innerHTML[0];
     nextSymbolWidth = getTextWidth(nextSymbol);
     bgComplete.style.borderRightWidth = nextSymbolWidth + 'px';

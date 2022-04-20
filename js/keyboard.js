@@ -17,6 +17,7 @@ CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
 export default class Keyboard {
     keys = [];
     static keyNames = [
+        ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
         ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']'],
         ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", ''],
         ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '', ''],
@@ -32,23 +33,24 @@ export default class Keyboard {
     setKeyButtons() {
         this.fixDPI();
         let padding = 10;
-        let stepX = Math.floor((this.canvas.width - this.canvas.width / 5) / 12) - padding;
-        let stepY = Math.floor(this.canvas.height / 4) - padding * 1.5;
+        let stepX = Math.floor((this.canvas.width) / 15) - padding;
+        let stepY = stepX;
+        // Math.floor(this.canvas.height / 4) - padding * 1.5;
         let startX = stepX + padding * 5;
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 12; j++) {
-                if (j == 10 && i == 1)
+                if (j == 11 && i == 2)
                     break;
-                if (j == 9 && i == 2)
+                if (j == 10 && i == 3)
                     break;
                 this.keys.push(new KeyButton(j * (stepX + padding) + padding + startX, i * (stepY + padding) + padding, stepX, stepY, Keyboard.keyNames[i][j]));
             }
             startX += padding * 4;
 
         }
-
-        this.keys.push(new KeyButton(stepX + padding + startX, stepY * 3 + padding * 5, stepX * 6, stepY, '⠀'));
+        this.ctx.font = `${Math.floor(this.keys[0].h/2)}px cursive`;
+        this.keys.push(new KeyButton(stepX + padding + startX, stepY * 4 + padding * 5, stepX * 6, stepY, '⠀'));
 
     }
 
@@ -72,10 +74,12 @@ export default class Keyboard {
         console.log(el.id);
         this.ctx.clearRect(el.x, el.y, el.w, el.h);
         this.drawButton(el, color);
+
+
     }
 
     paint() {
-        this.ctx.font = ' 48px cursive';
+
         this.keys.forEach(el => {
             this.drawButton(el);
         });
@@ -84,8 +88,8 @@ export default class Keyboard {
     drawButton(el, color = 'white') {
         this.ctx.fillStyle = `${color}`;
         this.ctx.lineWidth = 2;
-        this.ctx.roundRect(el.x, el.y, el.w, el.h, 10).fill();
-        this.ctx.roundRect(el.x, el.y, el.w, el.h, 10).stroke();
+        this.ctx.roundRect(el.x, el.y, el.w, el.h, Math.floor(el.h / 5)).fill();
+        // this.ctx.roundRect(el.x, el.y, el.w, el.h, 1).stroke();
         this.ctx.fillStyle = 'black';
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
