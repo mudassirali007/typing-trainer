@@ -17,34 +17,48 @@ CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
 export default class Keyboard {
     keys = [];
     static keyNames = [
-        ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
-        ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']'],
-        ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", ''],
-        ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '', ''],
-        ['', '', '', '', '', '', '', '', '.', '/', '', ''],
+        [
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
+            ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']'],
+            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'"],
+            ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
+        ],
+        [
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
+            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
+            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э"],
+            ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.'],
+        ]
     ];
-    constructor(canvas) {
+
+    constructor(canvas, lang = 0) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d')
+        this.lang = lang;
+        this.fixDPI();
+        this.setKeyButtons(lang);
+        this.paint();
+    }
+
+    changeKeyboard(lang) {
+        this.lang = lang;
         this.setKeyButtons();
+        this.clear();
         this.paint();
     }
 
     setKeyButtons() {
-        this.fixDPI();
+        console.log('lang', this.lang);
+        this.keys = [];
         let padding = 10;
         let stepX = Math.floor((this.canvas.width) / 15) - padding;
         let stepY = stepX;
         // Math.floor(this.canvas.height / 4) - padding * 1.5;
         let startX = stepX + padding * 5;
 
-        for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 12; j++) {
-                if (j == 11 && i == 2)
-                    break;
-                if (j == 10 && i == 3)
-                    break;
-                this.keys.push(new KeyButton(j * (stepX + padding) + padding + startX, i * (stepY + padding) + padding, stepX, stepY, Keyboard.keyNames[i][j]));
+        for (let i = 0; i < Keyboard.keyNames[this.lang].length; i++) {
+            for (let j = 0; j < Keyboard.keyNames[this.lang][i].length; j++) {
+                this.keys.push(new KeyButton(j * (stepX + padding) + padding + startX, i * (stepY + padding) + padding, stepX, stepY, Keyboard.keyNames[this.lang][i][j]));
             }
             startX += padding * 4;
 
@@ -74,12 +88,13 @@ export default class Keyboard {
         console.log(el.id);
         this.ctx.clearRect(el.x, el.y, el.w, el.h);
         this.drawButton(el, color);
-
-
     }
 
-    paint() {
 
+    clear() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+    paint() {
         this.keys.forEach(el => {
             this.drawButton(el);
         });

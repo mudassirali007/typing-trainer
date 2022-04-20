@@ -1,6 +1,13 @@
 import Keyboard from '../js/keyboard.js';
-const dictionary = ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america', 'put', 'print', 'about', 'true', 'false', 'input', 'while', 'for', 'table', 'char', 'double', 'string', 'bot', 'word', 'world', 'first', 'second', 'red', 'black', 'white', 'orange', 'travel', 'query', 'something', 'sometimes', 'anyway', 'return', 'add', 'delete', 'telegram', 'python', 'java', 'css', 'javascript', 'list', 'show', 'party', 'cat', 'read', 'mile', 'once', 'point', 'number', 'through', 'its', 'because', 'school', 'book', 'have', 'switch', 'their', 'give'];
-const keyDictionary = { 32: '⠀', 48: '0', 49: '1', 50: '2', 51: '3', 52: '4', 53: '5', 54: '6', 55: '7', 56: '8', 57: '9', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z', 186: ';', 187: '=', 188: ',', 189: '-', 190: '.', 191: '/', 219: '[', 221: ']', 222: "'" };
+const dictionary = [
+    ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america', 'put', 'print', 'about', 'true', 'false', 'input', 'while', 'for', 'table', 'char', 'double', 'string', 'bot', 'word', 'world', 'first', 'second', 'red', 'black', 'white', 'orange', 'travel', 'query', 'something', 'sometimes', 'anyway', 'return', 'add', 'delete', 'telegram', 'python', 'java', 'css', 'javascript', 'list', 'show', 'party', 'cat', 'read', 'mile', 'once', 'point', 'number', 'through', 'its', 'because', 'school', 'book', 'have', 'switch', 'their', 'give'],
+    ['слово', 'просто', 'дата', 'язык', 'то', 'если', 'я', 'когда', 'тогда', 'подъезд', 'следовательно', 'теорема', 'доказательство', 'крутой', 'вариант', 'тест', 'для', 'и', 'что', 'уровень', 'ошибка', 'оценка', 'статистика', 'гипотеза', 'отклоняется', 'таблица', 'ряд', 'время', 'коэффициент', 'эконометрика', 'анализ', 'группа', 'равно', 'производная', 'телефон', 'наушники', 'мел', 'компьютер', 'поиск', 'модель', 'задача', 'же', 'как', 'в', 'было', 'где-то', 'игра', 'ящерица', 'яйцо', 'голова', 'беседа', 'логарифм', 'изменение', 'граф', 'ребро', 'вершина']
+];
+// const dictionaryRU = ['просто', 'слово', 'теорема', 'доказательство', 'если', 'то'];
+const keyDictionary = [
+    { 32: '⠀', 48: '0', 49: '1', 50: '2', 51: '3', 52: '4', 53: '5', 54: '6', 55: '7', 56: '8', 57: '9', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z', 186: ';', 187: '=', 188: ',', 189: '-', 190: '.', 191: '/', 219: '[', 221: ']', 222: "'" },
+    { 32: '⠀', 48: '0', 49: '1', 50: '2', 51: '3', 52: '4', 53: '5', 54: '6', 55: '7', 56: '8', 57: '9', 65: 'ф', 66: 'и', 67: 'с', 68: 'в', 69: 'у', 70: 'а', 71: 'п', 72: 'р', 73: 'ш', 74: 'о', 75: 'л', 76: 'д', 77: 'ь', 78: 'т', 79: 'щ', 80: 'з', 81: 'й', 82: 'к', 83: 'ы', 84: 'е', 85: 'г', 86: 'м', 87: 'ц', 88: 'ч', 89: 'н', 90: 'я', 186: 'ж', 187: '=', 188: 'б', 189: '-', 190: 'ю', 191: '.', 219: 'х', 221: 'ъ', 222: "э" }
+]
 const uncompletedText = document.getElementById('uncompleted_text');
 const completedText = document.getElementById('completed_text');
 const timerLabel = document.getElementById('timer');
@@ -21,6 +28,19 @@ let time = 30;
 let symbolCounter = 0;
 let mistakeCounter = 0;
 let keyboard = null
+const langs = { 'en': 0, 'ru': 1 };
+let lang = 0;
+
+
+$('#lang').change(function() {
+    let value = $(this).val();
+    console.log(value);
+    lang = langs[value];
+    if (keyboard.lang != lang) {
+        keyboard.changeKeyboard(lang);
+    }
+    restart();
+});
 
 function ready() {
     keyboard = new Keyboard(keyboardCanvas);
@@ -69,24 +89,21 @@ function keyHandler(e) {
     nextSymbolWidth = getTextWidth(nextSymbol)
 
     if (e.keyCode == 116) {
-        stopTimer();
-        $(`#${symbol}`).css('background-color', 'transparent');
-        keyboard.setKeyColor(symbol);
-        show();
+        restart();
         return;
     }
 
     console.log(keyCode);
-    console.log('dict', keyDictionary[keyCode]);
-    if (keyDictionary[keyCode] != symbol) {
+    console.log('dict', keyDictionary[lang][keyCode]);
+    if (keyDictionary[lang][keyCode] != symbol) {
         if (isStartedTimer) {
             mistakeCounter++;
         }
         bgComplete.style.backgroundColor = 'red';
-        keyboard.setKeyColor(keyDictionary[keyCode], 'red');
+        keyboard.setKeyColor(keyDictionary[lang][keyCode], 'red');
         setTimeout(() => {
             bgComplete.style.backgroundColor = 'rgb(77, 114, 77)';
-            keyboard.setKeyColor(keyDictionary[keyCode]);
+            keyboard.setKeyColor(keyDictionary[lang][keyCode]);
         }, 200);
         return;
     }
@@ -127,6 +144,13 @@ function keyHandler(e) {
 
 }
 
+function restart() {
+    stopTimer();
+    $(`#${symbol}`).css('background-color', 'transparent');
+    keyboard.setKeyColor(symbol);
+    show();
+}
+
 function startTimer() {
     let isColored = false;
     if (isStartedTimer)
@@ -165,7 +189,7 @@ function show() {
 
     symbolCounter = 0;
     mistakeCounter = 0;
-    const cloneDictionary = [...dictionary];
+    const cloneDictionary = [...dictionary[lang]];
     keyboard.setKeyColor(nextSymbol);
     keyboard.setKeyColor(symbol);
     let newText = '';
@@ -189,7 +213,7 @@ function show() {
 let pos = 0;
 
 function nextWord() {
-    let word = dictionary[generateRandom(0, dictionary.length)];
+    let word = dictionary[lang][generateRandom(0, dictionary[lang].length)];
     keyCounter = word.length + 1;
     console.log('added word:', word);
     return word + '⠀';
