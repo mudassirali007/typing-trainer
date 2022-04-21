@@ -57,7 +57,9 @@
         height: 100%;
         overflow: hidden;
         font-family: cursive;
-        background-color: rgb(14, 14, 123);
+        /* background-color: rgb(14, 14, 123); */
+        background-color: #00003f;
+        /* background-color: rgb(228, 225, 225); */
     }
     
     #timer {

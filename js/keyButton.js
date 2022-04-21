@@ -7,5 +7,6 @@ export default class KeyButton {
         this.h = h;
         this.id = id;
         this.keyType = keyType;
+        this.isPushed = false;
     }
 }

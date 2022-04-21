@@ -54,7 +54,7 @@ export default class Keyboard {
         let stepX = Math.floor((this.canvas.width) / 15) - padding;
         let stepY = stepX;
         // Math.floor(this.canvas.height / 4) - padding * 1.5;
-        let startX = stepX + padding * 5;
+        let startX = stepX + padding * 2;
 
         for (let i = 0; i < Keyboard.keyNames[this.lang].length; i++) {
             for (let j = 0; j < Keyboard.keyNames[this.lang][i].length; j++) {
@@ -78,8 +78,15 @@ export default class Keyboard {
         return null;
     }
 
+    setPushed(pos, state) {
 
-    setKeyColor(id, color = 'white') {
+        if (pos == null)
+            return;
+        this.keys[pos].isPushed = state;
+    }
+
+
+    setKeyColor(id, color = '#ffffff') {
         let pos = this.getKeyButtonPosByID(id);
         if (pos == null)
             return;
@@ -100,17 +107,46 @@ export default class Keyboard {
         });
     }
 
-    drawButton(el, color = 'white') {
-        this.ctx.fillStyle = `${color}`;
+    redraw(pos, color = '#ffffff') {
+        let el = this.keys[pos]
+        this.ctx.clearRect(el.x - 1, el.y - 1, el.w, el.h);
+        this.drawButton(el, color);
+    }
+
+    drawButton(el, color = '#ffffff') {
         this.ctx.lineWidth = 2;
-        this.ctx.roundRect(el.x, el.y, el.w, el.h, Math.floor(el.h / 5)).fill();
-        // this.ctx.roundRect(el.x, el.y, el.w, el.h, 1).stroke();
-        this.ctx.fillStyle = 'black';
+        this.ctx.strokeStyle = 'white';
+        let padding = Math.floor(this.canvas.width / 300);
         this.ctx.textAlign = 'center';
         this.ctx.textBaseline = 'middle';
+
+        if (el.isPushed) {
+            this.ctx.fillStyle = `${color}`;
+            this.ctx.roundRect(el.x + padding, el.y + padding, el.w, el.h, Math.floor(el.h / 5)).fill();
+            this.ctx.fillStyle = '#000000';
+            this.ctx.fillText(el.id, Math.floor(el.x + padding + el.w / 2), Math.floor(el.y + padding + el.h / 2));
+            return;
+        }
+
+        this.ctx.fillStyle = this.getlighterDarkerColor(color, -40);
+        this.ctx.roundRect(el.x + padding, el.y + padding, el.w, el.h, Math.floor(el.h / 5)).fill();
+        // this.ctx.roundRect(el.x + padding, el.y + padding, el.w, el.h, Math.floor(el.h / 5)).stroke()
+        this.ctx.fillStyle = `${color}`;
+        this.ctx.roundRect(el.x, el.y, el.w, el.h, Math.floor(el.h / 5)).fill();
+
+        // this.ctx.roundRect(el.x, el.y, el.w, el.h, Math.floor(el.h / 5)).stroke();
+        this.ctx.fillStyle = '#000000';
         this.ctx.fillText(el.id, Math.floor(el.x + el.w / 2), Math.floor(el.y + el.h / 2));
     }
 
+    getlighterDarkerColor(color, percent) {
+        var num = parseInt(color.replace("#", ""), 16),
+            amt = Math.round(2.55 * percent),
+            R = (num >> 16) + amt,
+            B = (num >> 8 & 0x00FF) + amt,
+            G = (num & 0x0000FF) + amt;
+        return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
+    };
 
     fixDPI() {
         this.ratio = 4;

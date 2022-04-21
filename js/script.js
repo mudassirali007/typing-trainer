@@ -70,11 +70,12 @@ function setSize() {
     completedText.style.left = $("#uncompleted_text").css("left").slice(0, -2) - getTextWidth(completedText.innerHTML) + 'px';
     console.log($("#completed_bg").css("top").slice(0, -2) + fontSize.slice(0, -2) + 'px');
     console.log(fontSize.slice(0, -2));
-    $(`#${nextSymbol}`).css('background-color', 'rgb(77, 114, 77)');
-    keyboard.setKeyColor(nextSymbol, 'rgb(77, 114, 77)');
+    $(`#${nextSymbol}`).css('background-color', '#4D724D');
+    keyboard.setKeyColor(nextSymbol, '#4D724D');
 }
 
-let counter = 0;
+let spaceCounter = 0;
+let completedSymbolsCounter = 0;
 
 function keyHandler(e) {
     e.preventDefault();
@@ -82,8 +83,7 @@ function keyHandler(e) {
     symbol = uncompletedText.innerHTML[0];
 
 
-    $(`#${symbol}`).css('background-color', 'rgb(77, 114, 77)');
-    keyboard.setKeyColor(symbol, 'rgb(77, 114, 77)');
+    // $(`#${symbol}`).css('background-color', '#4D724D');
 
     nextSymbol = uncompletedText.innerHTML[1];
     nextSymbolWidth = getTextWidth(nextSymbol)
@@ -95,38 +95,55 @@ function keyHandler(e) {
 
     console.log(keyCode);
     console.log('dict', keyDictionary[lang][keyCode]);
+    let pos = keyboard.getKeyButtonPosByID(keyDictionary[lang][keyCode]);
+    let prevKey = nextSymbol;
+    keyboard.setPushed(pos, true);
+
+
+    setTimeout(() => {
+        keyboard.setPushed(pos, false);
+        keyboard.redraw(pos);
+
+    }, 100);
+
+
     if (keyDictionary[lang][keyCode] != symbol) {
         if (isStartedTimer) {
             mistakeCounter++;
         }
-        bgComplete.style.backgroundColor = 'red';
-        keyboard.setKeyColor(keyDictionary[lang][keyCode], 'red');
+        bgComplete.style.backgroundColor = '#FF0000';
+        keyboard.setKeyColor(keyDictionary[lang][keyCode], '#FF0000');
         setTimeout(() => {
-            bgComplete.style.backgroundColor = 'rgb(77, 114, 77)';
+            bgComplete.style.backgroundColor = '#4D724D';
             keyboard.setKeyColor(keyDictionary[lang][keyCode]);
-        }, 200);
+        }, 100);
         return;
     }
-    $(`#${symbol}`).css('background-color', 'transparent');
+    // $(`#${symbol}`).css('background-color', 'transparent');
     keyboard.setKeyColor(symbol);
     nextSymbol = uncompletedText.innerHTML[1];
-    $(`#${nextSymbol}`).css('background-color', 'rgb(77, 114, 77)');
-    keyboard.setKeyColor(nextSymbol, 'rgb(77, 114, 77)');
+    $(`#${nextSymbol}`).css('background-color', '#4D724D');
+
+    keyboard.setKeyColor(nextSymbol, '#4D724D');
+    setTimeout(() => {
+        keyboard.setKeyColor(nextSymbol, '#4D724D');
+    }, 100)
     startTimer();
 
     bgComplete.style.borderRightWidth = nextSymbolWidth + 'px';
 
     if (keyCode == 32) {
-        counter++;
+        spaceCounter++;
         uncompletedText.innerHTML += nextWord();
     } else {
         symbolCounter++;
     }
+    completedSymbolsCounter++;
 
-    if (counter == 1) {
+    if (completedSymbolsCounter >= 20) {
         console.log('clear');
-        completedText.innerHTML = '⠀' + completedText.innerHTML.slice(-10);
-        counter = 0;
+        completedText.innerHTML = '⠀' + completedText.innerHTML.slice(-20);
+        completedSymbolsCounter = 0;
 
     }
 
@@ -166,7 +183,7 @@ function startTimer() {
             show();
         }
         if (time <= 10 && !isColored) {
-            $('#timer').css('color', 'red');
+            $('#timer').css('color', '#FF0000');
             isColored = true;
         }
         timerLabel.innerHTML = time.toFixed(1);
