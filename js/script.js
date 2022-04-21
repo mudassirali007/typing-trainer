@@ -61,7 +61,7 @@ function setCursorTimer() {
 
 function setSize() {
     // let nextKeyWidth = getTextWidth(uncompletedText.innerHTML[0]);
-
+    keyboard.setKeyColor(nextSymbol);
     nextSymbol = uncompletedText.innerHTML[0];
     nextSymbolWidth = getTextWidth(nextSymbol);
     bgComplete.style.borderRightWidth = nextSymbolWidth + 'px';
