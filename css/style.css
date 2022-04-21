@@ -122,7 +122,18 @@
         width: fit-content;
     }
     
-    #lang option {
-        color: black;
-        width: fit-content;
+    select option {
+        font-size: 2vh;
+        background-color: #00003f;
+        color: #fff;
+        border: none;
+        border-radius: 0;
+    }
+    
+    #lang {
+        font-size: 2vh;
+        background-color: transparent;
+        color: white;
+        border-radius: 20px;
+        border: none;
     }
