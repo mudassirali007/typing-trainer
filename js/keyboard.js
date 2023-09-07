@@ -18,17 +18,19 @@ export default class Keyboard {
     keys = [];
     static keyNames = [
         [
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'ß', '´'],
+            ['q', 'w', 'e', 'r', 't', 'z', 'u', 'i', 'o', 'p', 'ü', '+'],
+            ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'ö', 'ä'],
+            ['y', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '-'],
+        ],
+        [
             ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
             ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']'],
             ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'"],
             ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/'],
         ],
-        [
-            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '='],
-            ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
-            ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', "э"],
-            ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.'],
-        ]
+
+
     ];
 
     constructor(canvas, lang = 0) {
@@ -48,30 +50,25 @@ export default class Keyboard {
     }
 
     setKeyButtons() {
-        console.log('lang', this.lang);
         this.keys = [];
         let padding = 10;
         let stepX = Math.floor((this.canvas.width) / 15) - padding;
         let stepY = stepX;
         // Math.floor(this.canvas.height / 4) - padding * 1.5;
         let startX = stepX + padding * 2;
-
         for (let i = 0; i < Keyboard.keyNames[this.lang].length; i++) {
             for (let j = 0; j < Keyboard.keyNames[this.lang][i].length; j++) {
                 this.keys.push(new KeyButton(j * (stepX + padding) + padding + startX, i * (stepY + padding) + padding, stepX, stepY, Keyboard.keyNames[this.lang][i][j]));
             }
             startX += padding * 4;
-
         }
         this.ctx.font = `${Math.floor(this.keys[0].h/2)}px cursive`;
         this.keys.push(new KeyButton(stepX + padding + startX, stepY * 4 + padding * 5, stepX * 6, stepY, '⠀'));
-
     }
 
     getKeyButtonPosByID(id) {
         for (let i = 0; i < this.keys.length; i++) {
             if (this.keys[i].id == id) {
-                console.log('found: ', id);
                 return i;
             }
         }
@@ -91,8 +88,6 @@ export default class Keyboard {
         if (pos == null)
             return;
         let el = this.keys[pos];
-        console.log('setColor', el);
-        console.log(el.id);
         this.ctx.clearRect(el.x, el.y, el.w, el.h);
         this.drawButton(el, color);
     }
@@ -153,8 +148,6 @@ export default class Keyboard {
         // Math.ceil(window.devicePixelRatio);
         this.canvas.width = this.canvas.width * this.ratio;
         this.canvas.height = this.canvas.height * this.ratio;
-        console.log(this.canvas.width);
-        console.log(this.canvas.height);
         // canvas.style.width = `${window.innerWidth}px`;
         // canvas.style.height = `${window.innerHeight}px`;
     }
