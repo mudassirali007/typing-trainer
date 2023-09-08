@@ -45,10 +45,12 @@ $('#lang').change(function() {
 
 
 $('#time-limit').change(function() {
+    if ($(this).val() === '' || $(this).val() < 1) $(this).val(30)
     time = parseInt($(this).val(),10) ?? 30;
     $('#timer').text(`${time}.0s`);
     restart();
 });
+
 
 document.querySelector('#fileInput').addEventListener('change', readFile);
 $(document).ready(function() {
