@@ -68,7 +68,7 @@ export default class Keyboard {
 
     getKeyButtonPosByID(id) {
         for (let i = 0; i < this.keys.length; i++) {
-            if (this.keys[i].id == id) {
+            if (this.keys[i].id == id || this.keys[i].id == id?.toLowerCase()) {
                 return i;
             }
         }

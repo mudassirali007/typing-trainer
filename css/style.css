@@ -83,8 +83,15 @@
         background-color: transparent;
         border-width: 0;
     }
+
     #time-limit {
+        border-width: 0;
+        font-size: 2vh;
         background-color: transparent;
+    }
+
+    #fileInput {
+        width: 7vw;
     }
 
     .options {
@@ -142,7 +149,7 @@
         width: 100vh;
         transform: translateX(-50%);
     }
-    
+
     #lang {
         color: black;
         position: absolute;
@@ -161,6 +168,14 @@
     }
     
     #lang {
+        font-size: 2vh;
+        background-color: transparent;
+        color: white;
+        border-radius: 20px;
+        border: none;
+    }
+
+    #text-selector {
         font-size: 2vh;
         background-color: transparent;
         color: white;

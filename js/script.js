@@ -1,13 +1,114 @@
 import Keyboard from '../js/keyboard.js';
-const dictionary = [
+const defaultDictionary = [
     ['mutter', 'vater', 'hund', 'hilfe', 'stil', 'anruf', 'essen', 'schließen', 'leben', 'aus', 'zeit', 'wenn', 'setzen', 'wie', 'schneiden', 'vor', 'hart', 'von', 'wo', 'waren', 'wasser', 'mama', 'amerika', 'legen', 'drucken', 'über', 'wahr', 'falsch', 'eingabe', 'während', 'für', 'tisch', 'zeichen', 'doppel', 'zeichenfolge', 'bot', 'wort', 'welt', 'erste', 'zweite', 'rot', 'schwarz', 'weiß', 'orange', 'reisen', 'anfrage', 'etwas', 'manchmal', 'jedenfalls', 'zurück', 'hinzufügen', 'löschen', 'telegramm', 'python', 'java', 'css', 'javascript', 'liste', 'zeigen', 'party', 'katze', 'lesen', 'meile', 'einmal', 'punkt', 'nummer', 'durch', 'seine', 'weil', 'schule', 'buch', 'haben', 'wechseln', 'ihre', 'geben'],
     ['mother', 'father', 'dog', 'help', 'style', 'call', 'food', 'close', 'live', 'out', 'time', 'if', 'set', 'how', 'cut', 'before', 'hard', 'from', 'where', 'were', 'water', 'mom', 'america', 'put', 'print', 'about', 'true', 'false', 'input', 'while', 'for', 'table', 'char', 'double', 'string', 'bot', 'word', 'world', 'first', 'second', 'red', 'black', 'white', 'orange', 'travel', 'query', 'something', 'sometimes', 'anyway', 'return', 'add', 'delete', 'telegram', 'python', 'java', 'css', 'javascript', 'list', 'show', 'party', 'cat', 'read', 'mile', 'once', 'point', 'number', 'through', 'its', 'because', 'school', 'book', 'have', 'switch', 'their', 'give'],
 ];
-// const dictionaryRU = ['просто', 'слово', 'теорема', 'доказательство', 'если', 'то'];
+let dictionary = defaultDictionary
+let asdfjklö = ["als", "also", "los", "Sold", "falsch", "öl", "Flöss", "Klo", "Folks", "Jod"];
+const textOptions = {
+    default: defaultDictionary[0],
+    asdfjklö,
+    upload: [],
+};
+
 const keyDictionary = [
-    { 32: '⠀', 48: '0', 49: '1', 50: '2', 51: '3', 52: '4', 53: '5', 54: '6', 55: '7', 56: '8', 57: '9', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'y', 90: 'z', 192: 'ö', 221: '´', 188: ',', 219: 'ß', 190: '.', 189: '-', 186: 'ü', 187: '+', 222: "ä" },
-    { 32: '⠀', 48: '0', 49: '1', 50: '2', 51: '3', 52: '4', 53: '5', 54: '6', 55: '7', 56: '8', 57: '9', 65: 'a', 66: 'b', 67: 'c', 68: 'd', 69: 'e', 70: 'f', 71: 'g', 72: 'h', 73: 'i', 74: 'j', 75: 'k', 76: 'l', 77: 'm', 78: 'n', 79: 'o', 80: 'p', 81: 'q', 82: 'r', 83: 's', 84: 't', 85: 'u', 86: 'v', 87: 'w', 88: 'x', 89: 'z', 90: 'y', 186: ';', 187: '=', 188: ',', 189: '-', 190: '.', 191: '/', 219: '[', 221: ']', 222: "'" },
-]
+    {
+        32: '⠀',
+        48: '0', 'Shift48': '=',
+        49: '1', 'Shift49': '!',
+        50: '2', 'Shift50': '"',
+        51: '3', 'Shift51': '§',
+        52: '4', 'Shift52': '$',
+        53: '5', 'Shift53': '%',
+        54: '6', 'Shift54': '&',
+        55: '7', 'Shift55': '/',
+        56: '8', 'Shift56': '(',
+        57: '9', 'Shift57': ')',
+        65: 'a', 'Shift65': 'A',
+        66: 'b', 'Shift66': 'B',
+        67: 'c', 'Shift67': 'C',
+        68: 'd', 'Shift68': 'D',
+        69: 'e', 'Shift69': 'E',
+        70: 'f', 'Shift70': 'F',
+        71: 'g', 'Shift71': 'G',
+        72: 'h', 'Shift72': 'H',
+        73: 'i', 'Shift73': 'I',
+        74: 'j', 'Shift74': 'J',
+        75: 'k', 'Shift75': 'K',
+        76: 'l', 'Shift76': 'L',
+        77: 'm', 'Shift77': 'M',
+        78: 'n', 'Shift78': 'N',
+        79: 'o', 'Shift79': 'O',
+        80: 'p', 'Shift80': 'P',
+        81: 'q', 'Shift81': 'Q',
+        82: 'r', 'Shift82': 'R',
+        83: 's', 'Shift83': 'S',
+        84: 't', 'Shift84': 'T',
+        85: 'u', 'Shift85': 'U',
+        86: 'v', 'Shift86': 'V',
+        87: 'w', 'Shift87': 'W',
+        88: 'x', 'Shift88': 'X',
+        89: 'y', 'Shift89': 'Y',
+        90: 'z', 'Shift90': 'Z',
+        186: 'ü', 'Shift186': 'Ü',
+        187: '+', 'Shift187': '*',
+        188: ',', 'Shift188': ';',
+        189: '-', 'Shift189': '_',
+        190: '.', 'Shift190': ':',
+        192: 'ö', 'Shift192': 'Ö',
+        219: 'ß', 'Shift219': '?',
+        221: '´', 'Shift221': '`',
+        222: 'ä', 'Shift222': 'Ä'
+    },
+    {
+        32: '⠀',
+        48: '0', 'Shift48': ')',
+        49: '1', 'Shift49': '!',
+        50: '2', 'Shift50': '@',
+        51: '3', 'Shift51': '#',
+        52: '4', 'Shift52': '$',
+        53: '5', 'Shift53': '%',
+        54: '6', 'Shift54': '^',
+        55: '7', 'Shift55': '&',
+        56: '8', 'Shift56': '*',
+        57: '9', 'Shift57': '(',
+        65: 'a', 'Shift65': 'A',
+        66: 'b', 'Shift66': 'B',
+        67: 'c', 'Shift67': 'C',
+        68: 'd', 'Shift68': 'D',
+        69: 'e', 'Shift69': 'E',
+        70: 'f', 'Shift70': 'F',
+        71: 'g', 'Shift71': 'G',
+        72: 'h', 'Shift72': 'H',
+        73: 'i', 'Shift73': 'I',
+        74: 'j', 'Shift74': 'J',
+        75: 'k', 'Shift75': 'K',
+        76: 'l', 'Shift76': 'L',
+        77: 'm', 'Shift77': 'M',
+        78: 'n', 'Shift78': 'N',
+        79: 'o', 'Shift79': 'O',
+        80: 'p', 'Shift80': 'P',
+        81: 'q', 'Shift81': 'Q',
+        82: 'r', 'Shift82': 'R',
+        83: 's', 'Shift83': 'S',
+        84: 't', 'Shift84': 'T',
+        85: 'u', 'Shift85': 'U',
+        86: 'v', 'Shift86': 'V',
+        87: 'w', 'Shift87': 'W',
+        88: 'x', 'Shift88': 'X',
+        89: 'y', 'Shift89': 'Y',
+        90: 'z', 'Shift90': 'Z',
+        186: ';', 'Shift186': ':',
+        187: '=', 'Shift187': '+',
+        188: ',', 'Shift188': '<',
+        189: '-', 'Shift189': '_',
+        190: '.', 'Shift190': '>',
+        191: '/', 'Shift191': '?',
+        219: '[', 'Shift219': '{',
+        221: ']', 'Shift221': '}',
+        222: "'", 'Shift222': '"'
+    },
+];
 
 const uncompletedText = document.getElementById('uncompleted_text');
 const completedText = document.getElementById('completed_text');
@@ -35,7 +136,7 @@ let lang = 0;
 
 
 $('#lang').change(function() {
-    let value = $(this).val();
+    const value = $(this).val();
     lang = langs[value];
     if (keyboard.lang != lang) {
         keyboard.changeKeyboard(lang);
@@ -52,7 +153,21 @@ $('#time-limit').change(function() {
 });
 
 
-document.querySelector('#fileInput').addEventListener('change', readFile);
+
+$('#text-selector').change(function() {
+    const selectedOption = $(this).find('option:selected');
+    const value = selectedOption.val();
+    lang = langs[selectedOption.attr('data-lang') ?? 'de'];
+    if (keyboard.lang != lang) {
+        keyboard.changeKeyboard(lang);
+    }
+    dictionary[lang] = textOptions[value];
+    restart();
+});
+
+
+
+
 $(document).ready(function() {
     // Open popup
     // $('#popup').show();
@@ -68,9 +183,26 @@ $(document).ready(function() {
             $('#popup').hide();
         }
     });
+
+    const selectElement = document.getElementById('text-selector');
+
+    const options = [
+        { lang: 'de', value: 'default', text: 'Default' },
+        { value: 'upload', text: 'Uploaded Dictionary' },
+        { lang: 'de', value: 'asdfjklö', text: 'asdfjklö' },
+    ];
+
+    options.forEach(optionData => {
+        const optionElement = document.createElement('option');
+        optionElement.setAttribute('data-lang', optionData.lang ?? 'de');
+        optionElement.value = optionData.value;
+        optionElement.textContent = optionData.text;
+        selectElement.appendChild(optionElement);
+    });
+
 });
 
-
+document.querySelector('#fileInput').addEventListener('change', readFile);
 function readFile(event) {
     const file = event.target.files[0];
 
@@ -87,6 +219,8 @@ function readFile(event) {
 
             // console.log(contentArray,dictionary,lang);
             dictionary[lang] = contentArray
+            textOptions['upload'] = contentArray;
+            $('#text-selector').val('upload').trigger('change');
             restart();
         });
 
@@ -146,8 +280,12 @@ function keyHandler(e) {
         restart();
         return;
     }
+    const isCapsLockOn = e.getModifierState('CapsLock');
+    const isShiftHeld = e.shiftKey;
+    let keyIdentifier = (isCapsLockOn && !isShiftHeld) || (!isCapsLockOn && isShiftHeld) ? 'Shift' + keyCode : keyCode;
 
-    let pos = keyboard.getKeyButtonPosByID(keyDictionary[lang][keyCode]);
+
+    let pos = keyboard.getKeyButtonPosByID(keyDictionary[lang][keyIdentifier]);
     let prevKey = nextSymbol;
     keyboard.setPushed(pos, true);
 
@@ -158,15 +296,15 @@ function keyHandler(e) {
     }, 100);
 
 
-    if (keyDictionary[lang][keyCode] != symbol) {
+    if (keyDictionary[lang][keyIdentifier] != symbol) {
         if (isStartedTimer) {
             mistakeCounter++;
         }
         bgComplete.style.backgroundColor = '#FF0000';
-        keyboard.setKeyColor(keyDictionary[lang][keyCode], '#FF0000');
+        keyboard.setKeyColor(keyDictionary[lang][keyIdentifier], '#FF0000');
         setTimeout(() => {
             bgComplete.style.backgroundColor = '#4D724D';
-            keyboard.setKeyColor(keyDictionary[lang][keyCode]);
+            keyboard.setKeyColor(keyDictionary[lang][keyIdentifier]);
         }, 100);
         return;
     }
@@ -227,6 +365,7 @@ function startTimer() {
     time = parseInt($('#time-limit').val(),10);
     timerId = setInterval(() => {
         time -= 0.1;
+        updateStats();
         if (time <= 0) {
             stopTimer();
             showResult();
@@ -237,9 +376,7 @@ function startTimer() {
             isColored = true;
         }
         timerLabel.innerHTML = `${time.toFixed(1)}s`;
-
     }, 100);
-
 }
 
 function stopTimer() {
@@ -257,7 +394,8 @@ function show() {
     time = parseInt($('#time-limit').val(),10) ?? 30;
     $('#timer').text(`${time}.0s`);
     $('#timer').css('color', 'white');
-
+    $('#wpm-speed').text(`-`);
+    $('#wpm-symbols').text(`-`);
 
     symbolCounter = 0;
     mistakeCounter = 0;
@@ -318,14 +456,16 @@ function getTextWidth(txt) {
 
 function showResult() {
     $('#popup').show();
+    updateStats();
 
+}
+function updateStats(){
     const wordsPerMinute = (symbolCounter / (5 * time)) * 60;
     const charsPerMinute = (symbolCounter / time) * 60;
-
     $('#speed').text(`${wordsPerMinute.toFixed(1)}WPM`);
     $('#wpm-speed').text(`${wordsPerMinute.toFixed(1)}`);
-    $('#symbols').text(`${charsPerMinute}`);
-    $('#wpm-symbols').text(`${charsPerMinute}`);
+    $('#symbols').text(`${charsPerMinute.toFixed(1)}`);
+    $('#wpm-symbols').text(`${charsPerMinute.toFixed(1)}`);
     $('#mistakes').text(`${mistakeCounter}`);
     $('#time').text(`${time.toFixed(1)}s`);
 }
