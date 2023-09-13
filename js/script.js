@@ -401,6 +401,7 @@ function show() {
     $('#wpm-speed').text(`-`);
     $('#wpm-symbols').text(`-`);
 
+    elapsedTime = 0;
     symbolCounter = 0;
     mistakeCounter = 0;
     const cloneDictionary = [...dictionary[lang]];
