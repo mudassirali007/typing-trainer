@@ -326,6 +326,7 @@ function keyHandler(e) {
         uncompletedText.innerHTML += nextWord();
     } else {
         symbolCounter++;
+        updateStats();
     }
     completedSymbolsCounter++;
 
@@ -365,7 +366,6 @@ function startTimer() {
     time = parseInt($('#time-limit').val(),10);
     timerId = setInterval(() => {
         time -= 0.1;
-        updateStats();
         if (time <= 0) {
             stopTimer();
             showResult();
@@ -462,6 +462,7 @@ function showResult() {
 function updateStats(){
     const wordsPerMinute = (symbolCounter / (5 * time)) * 60;
     const charsPerMinute = (symbolCounter / time) * 60;
+
     $('#speed').text(`${wordsPerMinute.toFixed(1)}WPM`);
     $('#wpm-speed').text(`${wordsPerMinute.toFixed(1)}`);
     $('#symbols').text(`${charsPerMinute.toFixed(1)}`);
