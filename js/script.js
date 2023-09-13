@@ -127,6 +127,7 @@ let keyCounter = 0;
 let timerId = null;
 let isStartedTimer = false;
 let time = parseInt($('#time-limit').val(),10) ?? 30;
+let elapsedTime = 0;
 let symbolCounter = 0;
 let mistakeCounter = 0;
 let keyboard = null
@@ -326,7 +327,6 @@ function keyHandler(e) {
         uncompletedText.innerHTML += nextWord();
     } else {
         symbolCounter++;
-        updateStats();
     }
     completedSymbolsCounter++;
 
@@ -365,7 +365,11 @@ function startTimer() {
     isStartedTimer = true;
     time = parseInt($('#time-limit').val(),10);
     timerId = setInterval(() => {
+        // time -= 0.1;
+        // updateStats();
         time -= 0.1;
+        elapsedTime += 0.1;
+        updateStats();
         if (time <= 0) {
             stopTimer();
             showResult();
@@ -460,9 +464,15 @@ function showResult() {
 
 }
 function updateStats(){
-    const wordsPerMinute = (symbolCounter / (5 * time)) * 60;
-    const charsPerMinute = (symbolCounter / time) * 60;
+    if(elapsedTime < 1) return; // Avoid division by zero and very small time intervals
 
+    const elapsedTimeInMinutes = elapsedTime / 60;
+    const wordsPerMinute = (symbolCounter / (5 * elapsedTimeInMinutes));
+    const charsPerMinute = (symbolCounter / elapsedTimeInMinutes);
+
+    // const wordsPerMinute = (symbolCounter / (5 * time)) * 60;
+    // const charsPerMinute = (symbolCounter / time) * 60;
+    // console.log(wordsPerMinute,charsPerMinute)
     $('#speed').text(`${wordsPerMinute.toFixed(1)}WPM`);
     $('#wpm-speed').text(`${wordsPerMinute.toFixed(1)}`);
     $('#symbols').text(`${charsPerMinute.toFixed(1)}`);
